@@ -1,36 +1,28 @@
-{% extends 'base.html' %}
+{% extends 'employees/employee_base.html' %}
 
-{% block title %}{% block header %} Employee Home {% endblock %}{% endblock %}
+{% block title %}{% block header %} Employee Portal {% endblock %}{% endblock %}
 
 {% block content %}
   {% if user.is_authenticated %}
-    Hello Employee {{ user.username }}!
+    Hello Employee, {{ logged_in_employee.name }}!
    <br>
-    Address: {logged_in_employee.address }} {{logged_in_employee.zip_code }}<br />
-    Today's Date:
-    {{date.today}}
+    Address: {{logged_in_employee.address }} {{logged_in_employee.zip_code }}
+    Today's Date: {{date.today}}
     <br>
     Today's Active Pickups: 
-    {{ active_pickups.name }} <br>
-    {{ active_pickups.address}} <br>
-    {{ active_pickups.zip_code}} <br>
-    {{ active_pickups.balance}} <br>
-    <br />
-    <br />
-    {% endif %}
-    <br />
-    <br />
-    {% endif %}
+    {% for customer in active_pickups %}<br>
+    <li>
+    {{customer.name}} {{customer.address}} {{customer.zip_code}}
+    </li>
+    {% endfor %}
+   <br>
+   <br>
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>
     <a href="{% url 'accounts:register' %}">Sign Up</a>
   {% endif %}
-{% endblock %}
+  {% endblock %}
 
-<!-- {% block content %}
-choose day of week and filter customers in my zipcode, pickup day today or one time pickup day that falls
-   on today. nonsuspended accounts. trash not yet picked up
-{% endblock %} -->
 
 
