@@ -29,7 +29,8 @@ def index(request):
 
         context = {
             'logged_in_employee': logged_in_employee,
-            'today': today
+            'today': today,
+            'active_pickups' : active_pickups
         }
         return render(request, 'employees/index.html')
     except ObjectDoesNotExist:
