@@ -5,6 +5,22 @@
 {% block content %}
   {% if user.is_authenticated %}
     Hello Employee {{ user.username }}!
+   <br>
+    Address: {logged_in_employee.address }} {{logged_in_employee.zip_code }}<br />
+    Today's Date:
+    {{date.today}}
+    <br>
+    Today's Active Pickups: 
+    {{ active_pickups.name }} <br>
+    {{ active_pickups.address}} <br>
+    {{ active_pickups.zip_code}} <br>
+    {{ active_pickups.balance}} <br>
+    <br />
+    <br />
+    {% endif %}
+    <br />
+    <br />
+    {% endif %}
   {% else %}
     <p>You are at the employee index, but you are not logged in.</p>
     <a href="{% url 'login' %}">Log In</a>
@@ -12,5 +28,9 @@
   {% endif %}
 {% endblock %}
 
-<!-- choose day of week and filter customers in my zipcode, pickup day today or one time pickup day that falls
-   on today. nonsuspended accounts. trash not yet picked up -->
+<!-- {% block content %}
+choose day of week and filter customers in my zipcode, pickup day today or one time pickup day that falls
+   on today. nonsuspended accounts. trash not yet picked up
+{% endblock %} -->
+
+
