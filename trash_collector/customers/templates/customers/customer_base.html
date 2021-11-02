@@ -2,7 +2,7 @@
 
 {% block navbar %}
     <a class="nav-item nav-link" href="{% url 'customers:index' %}">Home</a>
-    <a class="nav-item nav-link" href="{% url 'customers:one_time' %}">One-Time Pick Up</a>
-    <a class="nav-item nav-link" href="{% url 'customers:suspend' %}">Suspend Service</a>
-    <a class="nav-item nav-link" href="{% url 'customers:edit_profile' %}">Edit Profile</a>
+    <a class="nav-item nav-link" href="{% url 'customers:one_time' customer.id %}">One-Time Pick Up</a>
+    <a class="nav-item nav-link" href="{% url 'customers:suspend' customer.id %}">Suspend Service</a>
+    <a class="nav-item nav-link" href="{% url 'customers:edit_profile' customer.id %}">Edit Profile</a>
 {% endblock %}
