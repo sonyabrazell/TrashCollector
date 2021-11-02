@@ -22,7 +22,11 @@ def index(request):
         logged_in_employee = Employee.objects.get(user=logged_in_user)
 
         today = date.today()
-        
+
+        customers = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
+        today_customers = customers.filter(weekly_pickup=today)
+        active_pickups = today_customers.exclude(suspend_start__lt=today, suspend_end__gt=today)
+
         context = {
             'logged_in_employee': logged_in_employee,
             'today': today
@@ -45,6 +49,7 @@ def create(request):
         return render(request, 'employees/create.html')
     
 #edit function to edit an employee profile
+
 @login_required
 def edit_profile(request):
     logged_in_user = request.user
@@ -65,3 +70,22 @@ def edit_profile(request):
         return render(request, 'employees/edit_profile.html', context)
 
 #confirm function to confirm pickups to have a charge of $20 to customer account. Also to confirm pickup.
+@login_required
+def confirm(request, customer_id):
+    Customer = apps.get_model('customers.Customer')
+    customer_from_db = Customer.objects.get(pk=customer_id)
+    today = date.today()
+    customer_from_db.date_of_last_pickup = today
+    customer_from_db.balance += 20
+    return HttpResponseRedirect(reverse('employees:index'))
+    
+    
+    
+    # active_pickups.balance(20)
+    # active_pickups.date_of_last_pickup(date.today)
+    # active_pickups.save() 
+
+    
+# def my_function(para_one, para_two)
+# my_function(5, 10)
+# my_function(para_two=5, para_one=10)
