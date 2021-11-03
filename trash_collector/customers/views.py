@@ -16,7 +16,7 @@ def index(request):
         logged_in_customer = Customer.objects.get(user=logged_in_user)
 
         today = date.today()
-        
+
         context = {
             'logged_in_customer': logged_in_customer,
             'today': today
@@ -90,4 +90,4 @@ def edit_profile(request):
         context = {
             'logged_in_customer': logged_in_customer
         }
-        return render(request, 'customers/edit_profile.html', context)
+        return render(request, 'customers/edit_profile.html', context) 

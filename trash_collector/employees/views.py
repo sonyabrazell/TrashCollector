@@ -5,8 +5,8 @@ from django.shortcuts import render
 from django.apps import apps
 from .models import Employee
 from django.core.exceptions import ObjectDoesNotExist
-from datetime import date
-
+from datetime import date, datetime
+import calendar
 
 # Create your views here.
 
@@ -20,19 +20,20 @@ def index(request):
     try:
         # This line will return the customer record of the logged-in user if one exists
         logged_in_employee = Employee.objects.get(user=logged_in_user)
-
-        today = date.today()
+        
+        todays_date = date.today()
+        weekday_name=todays_date.day()
 
         customers = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
-        today_customers = customers.filter(weekly_pickup=today)
-        active_pickups = today_customers.exclude(suspend_start__lt=today, suspend_end__gt=today)
+        today_customers = customers.filter(weekly_pickup=weekday_name)
+        active_pickups = today_customers.exclude(suspend_start__lt=todays_date, suspend_end__gt=todays_date)
 
         context = {
             'logged_in_employee': logged_in_employee,
-            'today': today,
-            'active_pickups' : active_pickups
+            'todays_date': todays_date,
+            'active_pickups' : active_pickups,
         }
-        return render(request, 'employees/index.html')
+        return render(request, 'employees/index.html', context)
     except ObjectDoesNotExist:
         return HttpResponseRedirect(reverse('employees:create'))
 
@@ -79,6 +80,17 @@ def confirm(request, customer_id):
     customer_from_db.date_of_last_pickup = today
     customer_from_db.balance += 20
     return HttpResponseRedirect(reverse('employees:index'))
+
+@login_required
+def filter_customers(request):
+    Customer = apps.get_model('customers.Customer')
+    customers = Customer.objects.filter(weekly_pickup='')
+    context = {
+            'customers':customers
+        }
+    return render(request, 'employees/index.html', context)
+ 
+
     
     
     
