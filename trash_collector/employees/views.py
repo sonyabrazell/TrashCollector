@@ -62,7 +62,7 @@ def edit_profile(request):
         logged_in_employee.name = name_from_form
         logged_in_employee.address = address_from_form
         logged_in_employee.zip_code = zip_from_form
-        logged_in_employee.save()
+        logged_in_employee.save() 
         return HttpResponseRedirect(reverse('employees:index'))
     else:
         context = {
