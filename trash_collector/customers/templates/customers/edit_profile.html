@@ -1,6 +1,7 @@
 {% extends 'customers/customer_base.html' %} {% block title %} Customer Profile
-Edit {% endblock %} {% block header %} Update Your Information {% endblock %} {%
-block content %}
+Edit {% endblock %} {% block header %} Update Your Information {% endblock %} 
+
+{% block content %}
 <br />
 <form action="{% url 'customers:edit_profile' %}" method="post">
   {% csrf_token %} Name:

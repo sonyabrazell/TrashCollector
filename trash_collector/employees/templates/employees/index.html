@@ -2,50 +2,39 @@
 
 {% block title %}{% block header %} Employee Portal {% endblock %}{% endblock %}
 
-{% comment %} {% block content %}
-  {% if user.is_authenticated %}
-      Hello Employee, {{ logged_in_employee.name }}!
-    <br>
-      Address: {{logged_in_employee.address }} {{logged_in_employee.zip_code }}
-      Today's Date: {{today}}
-      <br>
-      Today's Active Pickups: 
-      {% for customer in active_pickups %}<br>
-      <li>
-      {{customer}} {{customer.address}} {{customer.zip_code}} 
-      <a href="{% url 'employees:confirm' customer.id %}">Confirm Pickup</a>
-      </li>
-      {% endfor %}
-    <br>
-    <br>
-  {% else %}
-      <p>You are at the employee index, but you are not logged in.</p>
-      <a href="{% url 'login' %}">Log In</a>
-      <a href="{% url 'accounts:register' %}">Sign Up</a>
-  {% endif %}
-{% endblock %} {% endcomment %}
-
-<!-- 
 {% block content %}
   {% if user.is_authenticated %}
-      Hello Employee, {{ logged_in_employee.name }}!
+  <br>
+      <h2>Hello {{ logged_in_employee.name }}!<br></h2>
     <br>
-      Address: {{logged_in_employee.address }} {{logged_in_employee.zip_code }}
-      Today's Date: {{weekday_name}}
-      <br>
-      Today's Active Pickups: 
-      
+      Address: {{logged_in_employee.address }} {{logged_in_employee.zip_code }} <br>
+      Today's Date: {{todays_date}}
+    <br>
+    <br>
+      <h3>Today's Active Pickups:<br></h3>
       {% for customer in active_pickups %}<br>
-      <li>
-      {{customer}} {{customer.address}} {{customer.zip_code}} - 
-      <a href="{% url 'employees:confirm' %}">Confirm Pickup</a>
-      </li>
+    <li>
+      {{customer}} {{customer.address}} {{customer.zip_code}} 
+      <a href="{% url 'employees:confirm' customer.id %}">Confirm Pickup</a>
+    </li>
       {% endfor %}
     <br>
+    <br>
+    <!-- <h3> Filter Customers by Pickup Day</h3>
+
+    {% for day in filter_by_day %}
+ 
+    <br>
+    <a href="{% url 'employees:filter_customers' weekly_pickup='Monday' %}">Monday</a>
+    <a href="{% url 'employees:filter_customers' weekly_pickup='Tuesday' %}">Tuesday</a>
+    <a href="{% url 'employees:filter_customers' weekly_pickup='Wednesday' %}">Wednesday</a>
+    <a href="{% url 'employees:filter_customers' weekly_pickup='Thursday' %}">Thursday</a>
+    <a href="{% url 'employees:filter_customers' weekly_pickup='Friday' %}">Friday</a>
+  {% endfor %} -->
     <br>
   {% else %}
       <p>You are at the employee index, but you are not logged in.</p>
       <a href="{% url 'login' %}">Log In</a>
       <a href="{% url 'accounts:register' %}">Sign Up</a>
   {% endif %}
-{% endblock %} -->
+{% endblock %}

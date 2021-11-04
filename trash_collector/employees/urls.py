@@ -10,4 +10,5 @@ urlpatterns = [
     path('new/', views.create, name="create"),
     path('edit_profile/', views.edit_profile, name="edit_profile"),
     path('confirm/<int:customer_id>', views.confirm, name='confirm'),
+    path('filter_customers/', views.filter_customers, name='filter_customers')
 ]

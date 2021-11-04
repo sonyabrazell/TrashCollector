@@ -21,17 +21,20 @@ def index(request):
         # This line will return the customer record of the logged-in user if one exists
         logged_in_employee = Employee.objects.get(user=logged_in_user)
         
-        todays_date = datetime.today()
+        todays_date = date.today()
         weekday_name=todays_date.strftime('%A')
 
         customers = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
         today_customers = customers.filter(weekly_pickup=weekday_name)
         active_pickups = today_customers.exclude(suspend_start__lt=todays_date, suspend_end__gt=todays_date)
 
+        # filter_by_day = request.filter_customers()
+
         context = {
             'logged_in_employee': logged_in_employee,
             'todays_date': todays_date,
             'active_pickups' : active_pickups,
+            # 'filter_by_day': filter_by_day,
         }
         return render(request, 'employees/index.html', context)
     except ObjectDoesNotExist:
@@ -79,14 +82,17 @@ def confirm(request, customer_id):
     today = date.today()
     customer_from_db.date_of_last_pickup = today
     customer_from_db.balance += 20
+    customer_from_db.save()
     return HttpResponseRedirect(reverse('employees:index'))
 
 @login_required
-def filter_customers(request):
+def filter_customers(request, weekly_pickup):
     Customer = apps.get_model('customers.Customer')
     customers = Customer.objects.filter(weekly_pickup='')
+    weekly_pickup = customers.weekly_pickup
     context = {
-            'customers':customers
+            'customers':customers,
+            'weekly_pickup':weekly_pickup
         }
     return render(request, 'employees/index.html', context)
  
