@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.apps import apps
 from .models import Employee
 from django.core.exceptions import ObjectDoesNotExist
@@ -27,6 +27,7 @@ def index(request):
         customers = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
         today_customers = customers.filter(weekly_pickup=weekday_name)
         active_pickups = today_customers.exclude(suspend_start__lt=todays_date, suspend_end__gt=todays_date)
+        active_pickups = active_pickups.exclude (date_of_last_pickup = todays_date)
 
         # filter_by_day = request.filter_customers()
 
@@ -76,14 +77,14 @@ def edit_profile(request):
 
 #confirm function to confirm pickups to have a charge of $20 to customer account. Also to confirm pickup.
 @login_required
-def confirm(request, customer_id):
+def confirm(request, user_id):
     Customer = apps.get_model('customers.Customer')
-    customer_from_db = Customer.objects.get(pk=customer_id)
+    customer_from_db = Customer.objects.get(pk=user_id)
     today = date.today()
     customer_from_db.date_of_last_pickup = today
     customer_from_db.balance += 20
     customer_from_db.save()
-    return HttpResponseRedirect(reverse('employees:index'))
+    return HttpResponse()
 
 @login_required
 def filter_customers(request, weekly_pickup):

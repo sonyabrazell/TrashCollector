@@ -15,7 +15,7 @@
       {% for customer in active_pickups %}<br>
     <li>
       {{customer}} {{customer.address}} {{customer.zip_code}} 
-      <a href="{% url 'employees:confirm' customer.id %}">Confirm Pickup</a>
+      <a href="{% url 'employees:confirm' customer.user_id %}">Confirm Pickup</a>
     </li>
       {% endfor %}
     <br>

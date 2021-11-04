@@ -1,0 +1,9 @@
+{% extends 'employees/employee_base.html' %} {% block title %} Employee Filter
+Customers {% endblock %} {% block header %} Filter Customers By Date {% endblock %} 
+{% block content %}
+<h3>Filter Customers By Date:</h3>
+<a href="{% url 'employees:filter_customers' 'weekly_pickup = Monday' %}">Monday</a>
+<a href="{% url 'employees:filter_customers' 'weekly_pickup = Tuesday' %}">Tuesday</a>
+<a href="{% url 'employees:filter_customers' 'weekly_pickup = Wednesday' %}">Wednesday</a>
+<a href="{% url 'employees:filter_customers' 'weekly_pickup = Thursday' %}">Thursday</a>
+<a href="{% url 'employees:filter_customers' 'weekly_pickup = Friday' %}">Friday</a>
