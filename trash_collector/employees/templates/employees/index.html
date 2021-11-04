@@ -12,8 +12,8 @@
       Today's Active Pickups: 
       {% for customer in active_pickups %}<br>
       <li>
-      {{customer}} {{customer.address}} {{customer.zip_code}} - 
-      <a href="{% url 'employees:confirm' customer.pk %}">Confirm Pickup</a>
+      {{customer}} {{customer.address}} {{customer.zip_code}} 
+      <a href="{% url 'employees:confirm' customer.id %}">Confirm Pickup</a>
       </li>
       {% endfor %}
     <br>
@@ -25,7 +25,7 @@
   {% endif %}
 {% endblock %} {% endcomment %}
 
-
+<!-- 
 {% block content %}
   {% if user.is_authenticated %}
       Hello Employee, {{ logged_in_employee.name }}!
@@ -48,4 +48,4 @@
       <a href="{% url 'login' %}">Log In</a>
       <a href="{% url 'accounts:register' %}">Sign Up</a>
   {% endif %}
-{% endblock %}
+{% endblock %} -->

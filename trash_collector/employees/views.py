@@ -21,8 +21,8 @@ def index(request):
         # This line will return the customer record of the logged-in user if one exists
         logged_in_employee = Employee.objects.get(user=logged_in_user)
         
-        todays_date = date.today()
-        weekday_name=todays_date.day()
+        todays_date = datetime.today()
+        weekday_name=todays_date.strftime('%A')
 
         customers = Customer.objects.filter(zip_code=logged_in_employee.zip_code)
         today_customers = customers.filter(weekly_pickup=weekday_name)
